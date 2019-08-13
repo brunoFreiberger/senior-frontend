@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+input {
+    border: 1px solid #008267 !important;
+    color: #008267 !important;
+}
+
+.btn-senior {
+    border: 1px solid #008267 !important;
+    color: #008267;
+}
+
+.btn-senior:hover {
+    background: #008267 !important;
+    color: white;
+}

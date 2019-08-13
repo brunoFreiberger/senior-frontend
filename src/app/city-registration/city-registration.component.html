@@ -1,0 +1,76 @@
+<form [formGroup]="form" (ngSubmit)="persistObject()">
+    <div class="row">
+        <div class="col-md-2">
+            <div class='form-group'>
+                <label>IBGE</label>
+                <input type="text" class='form-control' formControlName="ibgeId">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class='form-group'>
+                <label>UF</label>
+                <input type="text" class='form-control' formControlName="uf">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class='form-group'>
+                <label>Nome</label>
+                <input type="text" class='form-control' formControlName="name">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class='form-group'>
+                <label>Latitude</label>
+                <input type="text" class='form-control' formControlName="lat">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class='form-group'>
+                <label>Longitude</label>
+                <input type="text" class='form-control' formControlName="lon">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class='form-group'>
+                <label>Nome Alternativo</label>
+                <input type="text" class='form-control' formControlName="alternativeName">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class='form-group'>
+                <label>Nome Sem Acentos</label>
+                <input type="text" class='form-control' formControlName="noAccents">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class='form-group'>
+                <label>Capital</label>
+                <input type="text" class='form-control' formControlName="noAccents">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class='form-group'>
+                <label>Microrregião</label>
+                <input type="text" class='form-control' formControlName="microregion">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class='form-group'>
+                <label>Mesorregião</label>
+                <input type="text" class='form-control' formControlName="mesoregion">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-12">
+            <button class="btn btn-outline-success btn-senior mr-2" type="submit">Cadastrar</button>
+            <button class="btn btn-outline-secondary" type="button">Limpar</button>
+        </div>
+    </div>
+</form>
