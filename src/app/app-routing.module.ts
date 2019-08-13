@@ -4,6 +4,7 @@ import { CityRegistrationComponent } from './city-registration/city-registration
 import { CityListComponent } from './city-list/city-list.component';
 
 
+
 const routes: Routes = [
   { path: 'city-registration', component: CityRegistrationComponent },
   { path: 'city-list', component: CityListComponent }

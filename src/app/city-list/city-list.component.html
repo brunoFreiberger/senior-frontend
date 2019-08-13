@@ -1,7 +1,58 @@
-<ngx-datatable class="bootstrap" (sort)="onSort($event)" [rows]="rows" [columnMode]="'force'"
-[headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [selectionType]="'checkbox'" (select)='onSelect($event)'
-(page)='setPage($event.offset)' [externalPaging]="true" [count]="pageable.total" [offset]="pageable.pageNumber"
-[limit]="pageable.size" [selected]="selectedRows" [messages]="datatableMessageConfig">
+<div class="row">
+    <div class="form-group col-12">
+        <button class="btn btn-outline-success btn-senior float-right mr-2" type="button"> <i class="fa fa-file"></i> Importar</button>
+        <button class="btn btn-outline-success btn-senior float-right mr-2" type="button" [routerLink]="['../city-registration']"> <i class="fa fa-plus"></i> Nova Cidade</button>
+    </div>
+</div>
+
+<hr />
+
+<form [formGroup]="form" (ngSubmit)="search()">
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class='form-group'>
+                            <label>IBGE</label>
+                            <input type="text" class='form-control' formControlName="ibgeId">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class='form-group'>
+                            <label>Somente capitais</label>
+                            <select class="browser-default custom-select" formControlName="capital">
+                                <option value="1">Sim</option>
+                                <option value="2" selected>Não</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class='form-group'>
+                            <label>Estado</label>
+                            <select class="browser-default custom-select" formControlName="capital">
+                                <option value="0" selected>SC</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+                <button class="btn btn-outline-success btn-senior float-right mr-2" type="submit"> <i class="fa fa-search"></i> Pesquisar</button>
+                <button class="btn btn-outline-secondary float-right mr-2" type="button"> <i class="fa fa-trash"></i> Limpar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr />
+
+<ngx-datatable class="bootstrap" (sort)="onSort($event)" [rows]="cities" [columnMode]="'force'"
+    [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [selectionType]="'checkbox'" (select)='onSelect($event)'
+    (page)='setPage($event.offset)' [externalPaging]="true" [count]="pageable.total" [offset]="pageable.pageNumber"
+    [limit]="pageable.size" [selected]="selectedCities" [messages]="datatableMessageConfig">
 
     <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
     [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
@@ -12,10 +63,10 @@
     <ngx-datatable-column name="Ações" [sortable]="false">
     <ng-template let-row="row" ngx-datatable-cell-template>
         <button mat-raised-button type="button" class="btn btn-just-icon btn-sm btn-light-blue margin-right-10"
-            (click)="edit(row.id)">
+            (click)="editCity(row.id)">
             <i class="material-icons">edit</i>
         </button>
-        <button class="btn btn-just-icon btn-sm btn-danger" (click)="removeRow(row.id)">
+        <button class="btn btn-just-icon btn-sm btn-danger" (click)="removeCity(row.id)">
             <i class="material-icons">close</i>
         </button>
     </ng-template>

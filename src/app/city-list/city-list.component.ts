@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { City } from '../city-registration/city';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-city-list',
@@ -8,20 +9,14 @@ import { City } from '../city-registration/city';
 })
 export class CityListComponent implements OnInit {
 
-  public rows: Array<City>;
-  public selectedRows: Array<City> = [];
+  public cities: Array<City> = [];
+  public selectedCities: Array<City> = [];
   public pageable: any;
+  public form: FormGroup;
 
-  public datatableMessageConfig: any = {
-    emptyMessage: 'Nenhum registro encontrado!',
-    totalMessage: 'registro(s)'
-  };
+  public datatableMessageConfig: any;
 
-  public rowsLimitSelect: Array<any> = [
-    { value: 5 },
-    { value: 10 },
-    { value: 15 }
-  ];
+  public rowsLimitSelect: Array<any>;
 
   public columns: Array<any> = [
     { prop: 'ibgeId', name: 'IBGE' },
@@ -32,18 +27,28 @@ export class CityListComponent implements OnInit {
     { prop: 'lon', name: 'Longitude' }
   ];
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.form = fb.group({
+      'ibgeId': [null],
+      'capital': [false]
+    });
+   }
 
   ngOnInit() {
     this.pageable = { total: 0, size: 5, page: 0, sort: { properties: 'name', direction: 'ASC' } };
+    this.rowsLimitSelect = [
+      { value: 5 },
+      { value: 10 },
+      { value: 15 }
+    ];
+    this.datatableMessageConfig = {
+      emptyMessage: 'Nenhum registro encontrado!',
+      totalMessage: 'registro(s) encontrados.'
+    }
   }
 
-  public loadPaginatedData() {
+  public loadPaginatedData(): void {
 
-  }
-
-  public search() {
-    
   }
 
   public setPage(pageNumber: number): void {
@@ -53,15 +58,27 @@ export class CityListComponent implements OnInit {
 
   public onSelect({ selected }): void {
     if (selected) {
-      this.selectedRows = selected;
+      this.selectedCities = selected;
     }
   }
 
-  onSort(event) {
-    const evtSort = event.sorts[0];
-    const sort = { evtSort.prop, evtSort.dir === 'asc' ? 'ASC' : 'DESC' };
+  public onSort(event): void {
+    const evtSort: any = event.sorts[0];
+    const sort: any = { properties: evtSort.prop, direction : evtSort.dir === 'asc' ? 'ASC' : 'DESC' };
     this.pageable.sort = sort;
-    this.search(false);
+    this.loadPaginatedData();
+  }
+
+  public removeCity(id) {
+    //TODO
+  }
+
+  public editCity() {
+
+  }
+
+  public search() {
+
   }
 
 }

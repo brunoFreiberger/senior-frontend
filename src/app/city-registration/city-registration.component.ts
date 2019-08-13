@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { City } from './city';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CityService } from '../core/services/city.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-city-registration',
@@ -9,8 +14,9 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 export class CityRegistrationComponent implements OnInit {
 
   public form: FormGroup;
+  public city: City = {} as City;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public router: Router, public route: ActivatedRoute, public spinner: NgxSpinnerService, private service: CityService) {
     this.form = fb.group({
       'id': [null],
       'ibgeId': [null, Validators.required],
@@ -27,11 +33,39 @@ export class CityRegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      const id: number = params['id'];
+      if (id) {
+        this.spinner.show();
+        this.service.getById(id).subscribe(obj => {
+          this.city = obj;
+          this.form.setValue(this.city);
+          this.spinner.hide();
+        });
+      }
+    });
   }
 
-  public persistObject(): void {
-    const city = this.form.value;
-    console.log(city)
+  public persistObject() {
+    this.spinner.show();
+    this.persist().subscribe(() => {
+      this.spinner.hide();
+      console.log('Salvo com sucesso!');
+      this.back();
+    });
+  }
+
+  public persist(): Observable<any> {
+    this.city = this.form.value;
+    return this.service.save(this.city);
+}
+
+  public back() {
+    this.router.navigate(['../city-list']);
+  }
+
+  public clear() {
+    this.form.reset();
   }
 
 }

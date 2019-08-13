@@ -1,9 +1,13 @@
+@import '@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
 input {
     border: 1px solid #008267 !important;
     color: #008267 !important;
 }
 
-.btn-senior {
+.btn-senior, .custom-select {
     border: 1px solid #008267 !important;
     color: #008267;
 }
@@ -11,4 +15,7 @@ input {
 .btn-senior:hover {
     background: #008267 !important;
     color: white;
+}
+.page-count { 
+    background-color: #008267 !important;
 }
