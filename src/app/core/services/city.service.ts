@@ -46,11 +46,8 @@ export class CityService {
     return this.http.put('api/city/save', JSON.stringify(obj), this.httpOptions);
   }
 
-  public upload(formData: any) {
-    this.http.post('api/city/upload', formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
+  public upload(formData: any) : Observable<any>{
+    return this.http.post('api/city/upload', formData);
   }
 
   public getPaginatedDataFiltered(pageable: any, filter: CityFilter): Observable<any> {

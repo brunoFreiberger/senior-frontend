@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Direction } from '../core/model/direction';
 import { Sort } from '../core/model/sort';
 import { Router } from '@angular/router';
+import { CityFilter } from '../core/model/city-filter';
 
 @Component({
   selector: 'app-city-list',
@@ -32,7 +33,6 @@ export class CityListComponent implements OnInit {
     { prop: 'ibgeId', name: 'IBGE' },
     { prop: 'stateUf', name: 'UF' },
     { prop: 'name', name: 'Nome' },
-    { prop: 'capital', name: 'Capital' },
     { prop: 'lat', name: 'Latitude' },
     { prop: 'lon', name: 'Longitude' }
   ];
@@ -42,9 +42,11 @@ export class CityListComponent implements OnInit {
     private cityService: CityService,
     public spinner: NgxSpinnerService,
     private router: Router) {
+    
     this.filterForm = fb.group({
-      'ibgeId': [null],
-      'capital': [false]
+      'ibgeId': [''],
+      'capital': [false],
+      'stateId': ['']
     });
 
     this.uploadForm = fb.group({
@@ -56,11 +58,6 @@ export class CityListComponent implements OnInit {
 
     this.pageable = { total: 0, size: 5, page: 0, sort: new Sort(['name'], Direction.ASC) };
 
-    this.rowsLimitSelect = [
-      { value: 5 },
-      { value: 10 },
-      { value: 15 }
-    ];
     this.datatableMessageConfig = {
       emptyMessage: 'Nenhum registro encontrado!',
       totalMessage: 'registro(s) encontrados.'
@@ -68,11 +65,14 @@ export class CityListComponent implements OnInit {
     this.stateService.getAll().subscribe(list => {
       this.states = list;
     });
+
+    this.loadPaginatedData();
   }
 
   public loadPaginatedData(): void {
     this.spinner.show();
-    this.cityService.getPaginatedDataFiltered(this.pageable, this.filterForm.value).subscribe(data => {
+    const filter: CityFilter = this.filterForm.value;
+    this.cityService.getPaginatedDataFiltered(this.pageable, filter).subscribe(data => {
         this.spinner.hide();
         if (data) {
             this.cities = data.content;
@@ -93,28 +93,34 @@ export class CityListComponent implements OnInit {
     }
   }
 
-  public onSort(event): void {
-    const evtSort: any = event.sorts[0];
-    const sort: any = { properties: evtSort.prop, direction: evtSort.dir === 'asc' ? 'ASC' : 'DESC' };
+  onSort(event) {
+    const evtSort = event.sorts[0];
+    const sort = new Sort([evtSort.prop], evtSort.dir === 'asc' ? Direction.ASC : Direction.DESC);
     this.pageable.sort = sort;
     this.loadPaginatedData();
-  }
+}
 
   onFileSelect(event) {
+    this.spinner.show();
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       const formData = new FormData();
       formData.append('file', file);
-      this.cityService.upload(formData);
+      this.cityService.upload(formData).subscribe(res => {
+        this.loadPaginatedData();
+      });
     }
   }
 
-  onSubmitForm() {
-
+  public resetFilter(): void {
+    this.filterForm.reset();
+    this.loadPaginatedData();
   }
 
   public removeCity(id: number): void {
-    
+    this.cityService.remove(id).subscribe(res => {
+      this.loadPaginatedData();
+    });
   }
 
   public editCity(id: number): void {

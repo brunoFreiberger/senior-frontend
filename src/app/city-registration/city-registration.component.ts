@@ -28,7 +28,7 @@ export class CityRegistrationComponent implements OnInit {
     this.form = fb.group({
       'id': [null],
       'ibgeId': [null, Validators.required],
-      'stateUf': [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2)])],
+      'stateUf': [null],
       'name': [null, Validators.required],
       'capital': [null],
       'lat': [null, Validators.required],
