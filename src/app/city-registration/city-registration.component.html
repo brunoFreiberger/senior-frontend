@@ -8,8 +8,11 @@
         </div>
         <div class="col-md-2">
             <div class='form-group'>
-                <label>UF</label>
-                <input type="text" class='form-control' formControlName="uf">
+                <label>Estado</label>
+                <select class="browser-default custom-select" formControlName="stateUf">
+                    <option value="" selected>Selecione</option>
+                    <option [value]="state.uf" *ngFor="let state of states"> {{state.uf}} </option>
+                </select>
             </div>
         </div>
         <div class="col-md-8">
@@ -69,9 +72,9 @@
     </div>
     <div class="row">
         <div class="form-group col-12">
-            <button class="btn btn-outline-success btn-senior mr-2" type="submit">Cadastrar</button>
-            <button class="btn btn-outline-secondary mr-2" (click)="clear()" type="button">Limpar</button>
-            <button class="btn btn-outline-secondary mr-2" (click)="back()" type="button">Voltar</button>
+            <button class="btn btn-outline-secondary float-right mr-2" (click)="back()" type="button"> <i class="fa fa-arrow-left"></i> Voltar</button>
+            <button class="btn btn-outline-secondary float-right mr-2" (click)="clear()" type="button"> <i class="fa fa-trash"></i> Limpar</button>
+            <button class="btn btn-outline-success float-right btn-senior mr-2" type="submit">Salvar</button>
         </div>
     </div>
 </form>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { City } from 'src/app/city-registration/city';
+import { CityFilter } from '../model/city-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,17 @@ export class CityService {
 
   public update(obj: City): Observable<any> {
     return this.http.put('api/city/save', JSON.stringify(obj), this.httpOptions);
+  }
+
+  public upload(formData: any) {
+    this.http.post('api/city/upload', formData).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+  }
+
+  public getPaginatedDataFiltered(pageable: any, filter: CityFilter): Observable<any> {
+    const parameters: string = JSON.stringify({ pageable: pageable, filter: filter});
+    return this.http.post('api/city/paginated', parameters, this.httpOptions);
   }
 }

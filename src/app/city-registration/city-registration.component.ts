@@ -5,6 +5,8 @@ import { City } from './city';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CityService } from '../core/services/city.service';
 import { Observable } from 'rxjs/internal/Observable';
+import { StateService } from '../core/services/state.service';
+import { State } from '../core/model/state';
 
 @Component({
   selector: 'app-city-registration',
@@ -15,12 +17,18 @@ export class CityRegistrationComponent implements OnInit {
 
   public form: FormGroup;
   public city: City = {} as City;
+  public states: Array<State> = [];
 
-  constructor(private fb: FormBuilder, public router: Router, public route: ActivatedRoute, public spinner: NgxSpinnerService, private service: CityService) {
+  constructor(private fb: FormBuilder, 
+              public router: Router, 
+              public route: ActivatedRoute, 
+              public spinner: NgxSpinnerService, 
+              private service: CityService,
+              private stateService: StateService) {
     this.form = fb.group({
       'id': [null],
       'ibgeId': [null, Validators.required],
-      'uf': [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2)])],
+      'stateUf': [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2)])],
       'name': [null, Validators.required],
       'capital': [null],
       'lat': [null, Validators.required],
@@ -44,6 +52,11 @@ export class CityRegistrationComponent implements OnInit {
         });
       }
     });
+
+    this.stateService.getAll().subscribe(list => {
+      this.states = list;
+    });
+
   }
 
   public persistObject() {

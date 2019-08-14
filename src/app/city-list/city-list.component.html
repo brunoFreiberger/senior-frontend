@@ -1,13 +1,12 @@
 <div class="row">
     <div class="form-group col-12">
-        <button class="btn btn-outline-success btn-senior float-right mr-2" type="button"> <i class="fa fa-file"></i> Importar</button>
-        <button class="btn btn-outline-success btn-senior float-right mr-2" type="button" [routerLink]="['../city-registration']"> <i class="fa fa-plus"></i> Nova Cidade</button>
+        <input class="float-right" id="upload" type="file" name="file" (change)="onFileSelect($event)">
     </div>
 </div>
 
 <hr />
 
-<form [formGroup]="form" (ngSubmit)="search()">
+<form [formGroup]="filterForm" (ngSubmit)="search()">
     <div class="container">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -31,7 +30,8 @@
                         <div class='form-group'>
                             <label>Estado</label>
                             <select class="browser-default custom-select" formControlName="capital">
-                                <option value="0" selected>SC</option>
+                                <option value="" selected>Selecione</option>
+                                <option [value]="state.id" *ngFor="let state of states"> {{state.uf}} </option>
                             </select>
                         </div>
                     </div>
@@ -42,6 +42,7 @@
             <div class="form-group col-12">
                 <button class="btn btn-outline-success btn-senior float-right mr-2" type="submit"> <i class="fa fa-search"></i> Pesquisar</button>
                 <button class="btn btn-outline-secondary float-right mr-2" type="button"> <i class="fa fa-trash"></i> Limpar</button>
+                <button class="btn btn-outline-success btn-senior float-right mr-2" type="button" [routerLink]="['../city-registration']"> <i class="fa fa-plus"></i> Nova Cidade</button>
             </div>
         </div>
     </div>
@@ -49,27 +50,26 @@
 
 <hr />
 
-<ngx-datatable class="bootstrap" (sort)="onSort($event)" [rows]="cities" [columnMode]="'force'"
+<ngx-datatable class="bootstrap striped" (sort)="onSort($event)" [rows]="cities" [columnMode]="'force'"
     [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [selectionType]="'checkbox'" (select)='onSelect($event)'
     (page)='setPage($event.offset)' [externalPaging]="true" [count]="pageable.total" [offset]="pageable.pageNumber"
     [limit]="pageable.size" [selected]="selectedCities" [messages]="datatableMessageConfig">
 
     <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
-    [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
+        [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
     </ngx-datatable-column>
 
     <ngx-datatable-column *ngFor="let column of columns" name={{column.name}} prop={{column.prop}}></ngx-datatable-column>
 
     <ngx-datatable-column name="Ações" [sortable]="false">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-        <button mat-raised-button type="button" class="btn btn-just-icon btn-sm btn-light-blue margin-right-10"
-            (click)="editCity(row.id)">
-            <i class="material-icons">edit</i>
-        </button>
-        <button class="btn btn-just-icon btn-sm btn-danger" (click)="removeCity(row.id)">
-            <i class="material-icons">close</i>
-        </button>
-    </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <button type="button" class="btn btn-outline-primary mr-2" (click)="editCity(row.id)">
+                <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-danger" (click)="removeCity(row.id)">
+                <i class="fa fa-close"></i>
+            </button>
+        </ng-template>
     </ngx-datatable-column>
 
 </ngx-datatable>
