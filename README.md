@@ -2,12 +2,11 @@
 - Angular 8
 - Bootstrap
 - Spring Boot
-- Java 8
+- Java 12
 - QueryDSL
 - Swagger
 - ModelMapper
 - JPA/Hibernate
-- Node Server
 - Maven (dependencies)
 - Yarn
 - PostgreSQL
