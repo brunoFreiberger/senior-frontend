@@ -583,9 +583,9 @@ accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
     negotiator "0.6.2"
 
 acorn@^6.2.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.3.0.tgz#0087509119ffa4fc0a0041d1e93a417e68cb856e"
-  integrity sha512-/czfa8BwS88b9gWQVhc8eknunSA2DoJpJyTQkhheIf5E48u1N0R4q/YxxsAeqRrmK9TQ/uYfgLDfZo91UlANIA==
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.4.1.tgz#531e58ba3f51b9dacb9a6646ca4debf5b14ca474"
+  integrity sha512-ZVA9k326Nwrj3Cj9jlh3wGFutC2ZornPNARZwsNYqQYgN0EsV2d53w5RN/co65Ohn4sUAUtb1rSUAOD6XN9idA==
 
 adm-zip@^0.4.9:
   version "0.4.13"
@@ -1114,6 +1114,11 @@ bonjour@^3.5.0:
     dns-txt "^2.0.2"
     multicast-dns "^6.0.1"
     multicast-dns-service-types "^1.1.0"
+
+bootstrap@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.1.tgz#3aec85000fa619085da8d2e4983dfd67cf2114cb"
+  integrity sha512-SpiDSOcbg4J/PjVSt4ny5eY6j74VbVSjROY4Fb/WIUXBV9cnb5luyR4KnPvNoXuGnBK1T+nJIWqRsvU3yP8Mcg==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
